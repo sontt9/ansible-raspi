@@ -3,11 +3,25 @@
 # - Upgrade system include raspi-config
 # - Reboot
 # - Unattended upgrades
+# - Change pi default password
 ---
 - hosts: localhost
   become: true
+  vars_prompt:
+    - name: 'ssh_public_key_path'
+      prompt: 'Where is your SSH public key?'
+      default: '~/.ssh/id_rsa.pub'
+      private: no
+    - name: 'user_password'
+      prompt: 'What should the user password be?'
+      private: yes
+      encrypt: 'sha512_crypt'
+      confirm: yes
+      salt: 'raspberry'
   tasks:
-    - include_vars: ../vars/defaults.yml
+    - include_vars:  ../vars/defaults.yml
     - include_tasks: ../tasks/upgrade-system.yml
     - include_tasks: ../tasks/reboot.yml
     - include_tasks: ../tasks/unattended-upgrades.yml
+    - include_tasks: ../tasks/change-default-password.yml
+
