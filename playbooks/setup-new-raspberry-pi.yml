@@ -1,0 +1,7 @@
+# ansible-playbook playbooks/setup-new-raspi.yml --ask-become-pass --user pi --ask-pass
+# - Upgrade system include raspi-config
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: ../tasks/upgrade-system.yml

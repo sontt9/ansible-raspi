@@ -1,0 +1,20 @@
+---
+- name: Update system package lists
+  package:
+    update_cache: yes
+    cache_valid_time: 3600
+  when:
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Upgrading system
+  package:
+    upgrade: dist
+    update_cache: yes
+    autoremove: yes
+  when:
+    - ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Update raspi-config itself
+  package:
+    name: raspi-config
+    state: present
