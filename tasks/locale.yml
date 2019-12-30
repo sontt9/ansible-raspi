@@ -1,0 +1,10 @@
+---
+- name: Get locale
+  shell: "locale | grep ^LANG | cut -d= -f2"
+  register: linux_locale
+  changed_when: False
+  check_mode: no
+
+- name: Set locale via raspi-config
+  command: "raspi-config nonint do_change_locale {{ raspi_locale }}"
+  when: "raspi_locale != linux_locale"
