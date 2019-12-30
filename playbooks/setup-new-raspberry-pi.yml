@@ -4,6 +4,7 @@
 # - Reboot
 # - Unattended upgrades
 # - Change pi default password
+# - Sshd config
 ---
 - hosts: localhost
   become: true
@@ -24,4 +25,5 @@
     - include_tasks: ../tasks/reboot.yml
     - include_tasks: ../tasks/unattended-upgrades.yml
     - include_tasks: ../tasks/change-default-password.yml
+    - include_tasks: ../tasks/sshd.yml
 
