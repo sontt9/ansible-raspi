@@ -31,6 +31,10 @@
       prompt: 'What your raspi timezone?'
       default: 'UTC'
       private: no
+    - name: 'xkblayout'
+      prompt: 'What your raspi xkblayout?'
+      default: 'us'
+      private: no
   tasks:
     - include_vars:  ../vars/defaults.yml
     - include_tasks: ../tasks/enable-ssh.yml
@@ -42,4 +46,5 @@
     - include_tasks: ../tasks/hostname.yml
     - include_tasks: ../tasks/locale.yml
     - include_tasks: ../tasks/timezone.yml
+    - include_tasks: ../tasks/xkblaybout.yml
 

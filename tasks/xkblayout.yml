@@ -1,0 +1,11 @@
+---
+- name: Get x keyboard layout
+  shell: "localectl | awk '/X11 Layout/ {print $3}'"
+  register: linux_xkblayout
+  changed_when: False
+  check_mode: no
+
+- name: set X11 keyboard layout
+  command: "raspi-config nonint do_configure_keyboard {{ xkblayout }}"
+  when: "xkblayout != linux_xkblayout"
+
