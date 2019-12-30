@@ -1,0 +1,2 @@
+[localhost]
+0.0.0.0 ansible_user=pi ansible_port=22
