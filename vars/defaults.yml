@@ -1,0 +1,79 @@
+---
+
+## Unattended Upgrades
+
+apt_periodic_enable: "1"
+apt_periodic_update_package_Lists: "1"
+apt_periodic_download_upgradeable_packages: "1"
+apt_periodic_unattended_upgrade: "1"
+apt_periodic_autoclean_interval: "7"
+apt_dist_upgrade: "true"
+
+unattended_upgrades_package_blacklist: []
+unattended_upgrades_mail: "root"
+unattended_upgrades_mail_only_on_error: "true"
+
+listchanges_email_address: ""
+
+## SSHD
+
+sshd_protocol: 2
+sshd_port: 22
+sshd_address_family: any
+sshd_listen_address: ['0.0.0.0', '::']
+sshd_host_key: ['/etc/ssh/ssh_host_rsa_key', '/etc/ssh/ssh_host_ed25519_key']
+sshd_syslog_facility: AUTH
+sshd_log_level: VERBOSE
+sshd_login_grace_time: 2m
+sshd_permit_root_login: "no"
+sshd_strict_modes: "yes"
+sshd_max_auth_tries: 3
+sshd_max_sessions: 3
+sshd_pubkey_authentication: "yes"
+sshd_authorized_keys_file: .ssh/authorized_keys
+sshd_authorized_principals_file: none
+sshd_authorized_keys_command: none
+sshd_authorized_keys_command_user: nobody
+sshd_hostbased_authentication: "no"
+sshd_ignore_user_known_hosts: "no"
+sshd_ignore_rhosts: "yes"
+sshd_password_authentication: "no"
+sshd_permit_empty_passwords: "no"
+sshd_challenge_response_authentication: "no"
+sshd_kerberos_authentication: "no"
+sshd_kerberos_or_local_passwd: "yes"
+sshd_kerberos_ticket_cleanup: "yes"
+sshd_kerberos_get_afs_token: "no"
+sshd_gss_api_authentication: "no"
+sshd_gss_api_cleanup_credentials: "yes"
+sshd_gss_api_strict_acceptor_check: "yes"
+sshd_gss_api_key_exchange: "no"
+sshd_use_pam: "yes"
+sshd_allow_agent_forwarding: "no"
+sshd_allow_tcp_forwarding: "no"
+sshd_gateway_ports: "no"
+sshd_x11_forward: "no"
+sshd_x11_display_offset: 10
+sshd_x11_use_local_host: "yes"
+sshd_permit_tyy: "yes"
+sshd_print_motd: "no"
+sshd_print_last_log: "yes"
+sshd_tcp_keep_alive: "no"
+sshd_use_login: "no"
+sshd_use_privilege_separation: sandbox
+sshd_permit_user_environment: "no"
+sshd_compression: delayed
+sshd_client_alive_interval: 120
+sshd_client_alive_count_max: 2
+sshd_use_dns: "no"
+sshd_pid_file: /run/sshd.pid
+sshd_max_startups: 10:30:100
+sshd_permit_tunnel: "no"
+sshd_chroot_directory: none
+sshd_version_addendum: none
+sshd_banner: none
+sshd_accept_env: LANG LC_*
+sshd_subsystem_sftp: /usr/lib/ssh/sftp-server
+sshd_ciphers: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+sshd_macs: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
+sshd_kex_algorithms: curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group14-sha256,diffie-hellman-group18-sha512

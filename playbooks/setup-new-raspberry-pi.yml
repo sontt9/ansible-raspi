@@ -35,6 +35,16 @@
       prompt: 'What your raspi xkblayout?'
       default: 'us'
       private: no
+    - name: 'wifi_ssid'
+      prompt: 'What your wifi ssid?'
+      private: no
+    - name: 'xkblayout'
+      prompt: 'What your wifi password?'
+      private: no
+    - name: 'xkblayout'
+      prompt: 'What your wifi country?'
+      private: no
+
   tasks:
     - include_vars:  ../vars/defaults.yml
     - include_tasks: ../tasks/enable-ssh.yml
@@ -47,4 +57,5 @@
     - include_tasks: ../tasks/locale.yml
     - include_tasks: ../tasks/timezone.yml
     - include_tasks: ../tasks/xkblaybout.yml
+    - include_tasks: ../tasks/wifi.yml
 

@@ -1,0 +1,13 @@
+---
+- name: Configure Wifi
+  become: yes
+  template:
+    src: ../templates/wpa_supplicant.conf.j2
+    dest: /etc/wpa_supplicant.conf
+    mode: 0600
+
+- name: Restart networking
+  become: yes
+  service:
+    name: networking
+    state: restarted
