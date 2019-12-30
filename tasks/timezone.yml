@@ -1,0 +1,10 @@
+---
+- name: Get timezone via timedatectl
+  shell: "timedatectl | grep 'Time zone' | cut -d':' -f2 | cut -d'(' -f1 | sed -Ee 's/(^ *| *$)//g'"
+  register: linux_timezone
+  changed_when: False
+  check_mode: no
+
+- name: Set timezone {{ raspi_timezone }}
+  command: "timedatectl set-timezone {{ raspi_timezone }}"
+  when: linux_timezone != raspi_timezone

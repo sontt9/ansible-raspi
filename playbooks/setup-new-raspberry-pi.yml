@@ -27,6 +27,10 @@
       prompt: 'What your raspi locale?'
       default: 'en_US.UTF-8'
       private: no
+    - name: 'raspi_timezone'
+      prompt: 'What your raspi timezone?'
+      default: 'UTC'
+      private: no
   tasks:
     - include_vars:  ../vars/defaults.yml
     - include_tasks: ../tasks/enable-ssh.yml
@@ -37,4 +41,5 @@
     - include_tasks: ../tasks/sshd.yml
     - include_tasks: ../tasks/hostname.yml
     - include_tasks: ../tasks/locale.yml
+    - include_tasks: ../tasks/timezone.yml
 
