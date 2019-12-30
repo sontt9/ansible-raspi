@@ -1,0 +1,9 @@
+---
+- name: Check if ssh is enabled or not
+  shell: "raspi-config nonint get_ssh"
+  register: raspi_config_ssh
+  changed_when: False
+
+- name: Enable SSH
+  shell: "raspi-config nonint do_ssh 0"
+  when: raspi_config_ssh.stdout != '0'

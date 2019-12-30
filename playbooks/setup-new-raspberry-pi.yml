@@ -23,12 +23,18 @@
       prompt: 'What your raspi hostname?'
       default: 'rpi'
       private: no
+    - name: 'raspi_locale'
+      prompt: 'What your raspi locale?'
+      default: 'en_US.UTF-8'
+      private: no
   tasks:
     - include_vars:  ../vars/defaults.yml
+    - include_tasks: ../tasks/enable-ssh.yml
     - include_tasks: ../tasks/upgrade-system.yml
     - include_tasks: ../tasks/reboot.yml
     - include_tasks: ../tasks/unattended-upgrades.yml
     - include_tasks: ../tasks/change-default-password.yml
     - include_tasks: ../tasks/sshd.yml
     - include_tasks: ../tasks/hostname.yml
+    - include_tasks: ../tasks/locale.yml
 
