@@ -1,0 +1,14 @@
+---
+- name: Ensure NTP-related packages are installed.
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+      - ntp
+      - tzdata
+
+- name: Ensure NTP service is running.
+  service:
+    name: ntp
+    state: started
+    enabled: yes
