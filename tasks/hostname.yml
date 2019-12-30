@@ -1,0 +1,9 @@
+---
+- name: Get raspi hostname
+  shell: "raspi-config nonint get_hostname"
+  register: raspi_config_hostname
+  changed_when: False
+
+- name: Set raspi hostname
+  shell: "raspi-config nonint do_hostname {{ raspi_hostname }}"
+  when: raspi_config_hostname.stdout != raspi_hostname

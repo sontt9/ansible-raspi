@@ -19,6 +19,10 @@
       encrypt: 'sha512_crypt'
       confirm: yes
       salt: 'raspberry'
+    - name: 'raspi_hostname'
+      prompt: 'What your raspi hostname?'
+      default: 'rpi'
+      private: no
   tasks:
     - include_vars:  ../vars/defaults.yml
     - include_tasks: ../tasks/upgrade-system.yml
@@ -26,4 +30,5 @@
     - include_tasks: ../tasks/unattended-upgrades.yml
     - include_tasks: ../tasks/change-default-password.yml
     - include_tasks: ../tasks/sshd.yml
+    - include_tasks: ../tasks/hostname.yml
 
