@@ -38,16 +38,15 @@
     - name: 'wifi_ssid'
       prompt: 'What your wifi ssid?'
       private: no
-    - name: 'xkblayout'
+    - name: 'wifi_password'
       prompt: 'What your wifi password?'
       private: no
-    - name: 'xkblayout'
+    - name: 'wifi_country'
       prompt: 'What your wifi country?'
       private: no
 
   tasks:
     - include_vars:  ../vars/defaults.yml
-    - include_tasks: ../tasks/enable-ssh.yml
     - include_tasks: ../tasks/upgrade-system.yml
     - include_tasks: ../tasks/reboot.yml
     - include_tasks: ../tasks/unattended-upgrades.yml
@@ -57,6 +56,6 @@
     - include_tasks: ../tasks/locale.yml
     - include_tasks: ../tasks/timezone.yml
     - include_tasks: ../tasks/ntp.yml
-    - include_tasks: ../tasks/xkblaybout.yml
+    - include_tasks: ../tasks/xkblayout.yml
     - include_tasks: ../tasks/wifi.yml
 
