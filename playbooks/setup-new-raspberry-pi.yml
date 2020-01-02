@@ -1,10 +1,4 @@
 # ansible-playbook playbooks/setup-new-raspi.yml --ask-become-pass --user pi --ask-pass
-# - Defaults vars
-# - Upgrade system include raspi-config
-# - Reboot
-# - Unattended upgrades
-# - Change pi default password
-# - Sshd config
 ---
 - hosts: localhost
   become: true
