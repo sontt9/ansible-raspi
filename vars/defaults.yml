@@ -77,3 +77,15 @@ sshd_subsystem_sftp: /usr/lib/ssh/sftp-server
 sshd_ciphers: chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 sshd_macs: hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com
 sshd_kex_algorithms: curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group14-sha256,diffie-hellman-group18-sha512
+
+# Adguard Home
+# ---
+
+adguardhome_version: '0.100.8'
+adguardhome_arch: "{{ (ansible_architecture == 'x86_64') | ternary('amd64', 'arm') }}"
+adguardhome_archive: "AdGuardHome_linux_{{ adguardhome_arch }}.tar.gz"
+adguardhome_url: "https://github.com/AdguardTeam/AdGuardHome/releases/download/v{{ adguardhome_version }}/{{ adguardhome_archive }}"
+adguardhome_config_path: /etc/adguardhome/
+adguardhome_data_path: /var/adguardhome/
+adguardhome_user: adguardhome
+adguardhome_group: adguardhome
