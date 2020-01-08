@@ -1,0 +1,103 @@
+---
+- name: Check if AdGuard Home is already present.
+  become: true
+  command: which adguardhome
+  failed_when: false
+  changed_when: false
+  register: adguardhome_command_result
+
+- name: Download AdGuard Home
+  unarchive:
+    src: "{{ adguardhome_url }}"
+    dest: /tmp/
+    remote_src: true
+  when: adguardhome_command_result.rc == 1
+
+- name: Create Adguard Home group
+  group:
+    name: "{{ adguardhome_group }}"
+    system: yes
+  when: adguardhome_command_result.rc == 1
+
+- name: Create Adguard Home user
+  user:
+    name: "{{ adguardhome_user }}"
+    create_home: no
+    shell: /sbin/nologin
+    group: "{{ adguardhome_group }}"
+    system: yes
+  when: adguardhome_command_result.rc == 1
+
+- name: Create AdGuard Home data directory
+  file:
+    name: "{{ item }}"
+    state: directory
+    owner: "{{ adguardhome_user }}"
+    group: "{{ adguardhome_group }}"
+  with_items:
+    - "{{ adguardhome_config_path }}"
+    - "{{ adguardhome_data_path }}"
+  when: adguardhome_command_result.rc == 1
+
+- name: Copy AdGuard Home binary
+  copy:
+    src: /tmp/AdGuardHome/AdGuardHome
+    dest: /usr/local/bin/adguardhome
+    owner: "{{ adguardhome_user }}"
+    group: "{{ adguardhome_group }}"
+    mode: 0750
+    remote_src: true
+  when: adguardhome_command_result.rc == 1
+
+- name: AdGuard systemd unit file
+  template:
+    src: ../templates/adguardhome.service.j2
+    dest: /etc/systemd/system/adguardhome.service
+    force: yes
+  when: adguardhome_command_result.rc == 1
+
+- name: AdGuard Home systemd unit file
+  become: true
+  copy:
+    content: |
+      [Unit]
+      Description=AdGuardHome
+
+      [Service]
+      User={{ adguardhome_user }}
+      Group={{ adguardhome_group }}
+      ProtectSystem=strict
+      ProtectHome=true
+      ReadWritePaths={{ adguardhome_config_path }} {{ adguardhome_data_path }}
+      ExecStart=adguardhome -w {{ adguardhome_data_path }} -c {{ adguardhome_config_path }}/adguardhome.yaml
+      AmbientCapabilities=CAP_NET_BIND_SERVICE
+      NoNewPrivileges=true
+      PrivateTmp=true
+      PrivateDevices=true
+      DevicePolicy=closed
+      ProtectKernelTunables=true
+      ProtectKernelModules=true
+      ProtectControlGroups=true
+      LockPersonality=true
+      MemoryDenyWriteExecute=true
+      RestrictRealtime=true
+      RemoveIPC=true
+      RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/adguardhome.service
+  when: adguardhome_command_result.rc == 1
+
+- name: Deploy AdGuard Home Configuration
+  template:
+    src: ../templates/adguardhome.yaml.j2
+    dest: /etc/adguardhome/adguardhome.yaml
+    owner: "{{ adguardhome_user }}"
+    group: "{{ adguardhome_group }}"
+
+- name: Ensure AdGuard Home is started
+  systemd:
+    name: adguardhome
+    state: started
+    enabled: yes
