@@ -1,0 +1,7 @@
+# ansible-playbook playbooks/setup-new-raspi.yml --ask-become-pass --user pi --ask-pass
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - include_vars:  ../vars/docker.yml
+    - include_tasks: ../tasks/docker.yml
