@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  become: true
+  vars:
+    home_assistant_image: homeassistant/home-assistant
+    home_assistant_config_dir: /etc/hass
+    home_assistant_version: latest
+  tasks:
+    - name: Create home-assistant config directory
+      file:
+        path: "{{ home_assistant_config_dir }}"
+        state: directory
+        owner: root
+        group: root
+    - name: Create Home Assistant docker containter
+      become: true
+      docker_container:
+        image: "{{ home_assistant_image }}:{{ home_assistant_version }}"
+        name: hass
+        state: started   
+        restart_policy: always
+        network_mode: host
+        volumes:
+        - /etc/hass:/config
+        - /etc/localtime:/etc/localtime:ro
